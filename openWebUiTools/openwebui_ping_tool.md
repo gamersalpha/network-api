@@ -111,6 +111,6 @@ Chaque outil sera intégré dans OpenWebUI via un fichier `.py` dédié, dans le
 ---
 
 Tu peux contribuer ou suivre l’avancement via le dépôt GitHub :  
-👉 `https://github.com/<ton_user>/network-api`
+👉 `https://github.com/gamersalpha/network-api`
 
 ---
