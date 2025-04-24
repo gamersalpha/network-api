@@ -1,3 +1,4 @@
+
 # 🌐 Network API
 
 Une API réseau simple, puissante et extensible, construite avec **FastAPI**, permettant d'exécuter des outils de diagnostic réseau via HTTP (Swagger UI ou requêtes REST).
@@ -18,23 +19,33 @@ Une API réseau simple, puissante et extensible, construite avec **FastAPI**, pe
 
 ---
 
+## 🔐 Sécurité
+
+Toutes les routes sous `/v1/` sont **protégées par une API Key**.
+
+- L'API attend un header : `X-API-Key`
+- Les clés et permissions sont définies dans `.env`
+
+Exemple :
+```http
+GET /v1/ping?host=8.8.8.8
+X-API-Key: votre_cle_api
+```
+
+---
+
 ## ⚙️ Installation locale
 
 ```bash
 git clone https://github.com/gamersalpha/network-api.git
 cd network-api
 
-# Création de l'environnement virtuel
 python -m venv venv
+# Activation
+venv\Scripts\activate      # Windows
+source venv/bin/activate   # Linux/macOS
 
-# Activation (selon OS)
-venv\Scripts\activate        # Windows
-source venv/bin/activate     # Linux / macOS
-
-# Installation des dépendances
 pip install -r requirements.txt
-
-# Lancement de l'API
 uvicorn app.main:app --reload --port 8088
 ```
 
@@ -51,38 +62,54 @@ docker compose up --build
 
 ---
 
-## 🧪 Exemple de requête
+## 🧪 Tests unitaires
 
-```http
-GET /v1/nmap?host=scanme.nmap.org&scan_mode=custom&ports=22,80&only_open=true
+Lancer les tests :
+
+```bash
+pytest -v
 ```
 
-Réponse :
+Avec couverture :
 
-```json
-{
-  "host": "scanme.nmap.org",
-  "ports": [
-    { "port": 22, "state": "open", "service": "ssh" },
-    { "port": 80, "state": "open", "service": "http" }
-  ]
-}
+```bash
+pytest --cov=app --cov-report=html
+```
+
+Ouvre ensuite `htmlcov/index.html` pour voir les lignes couvertes ✅
+
+---
+
+## 📁 Arborescence (extrait)
+
+```
+app/
+├── api/
+│   └── v1/
+│       └── endpoints/      # Routes : ping, dig, etc.
+├── core/                   # Middleware de sécurité
+├── models/                # Schémas de réponse
+├── services/              # Logiciel métier
+├── main.py                # Point d’entrée
 ```
 
 ---
 
 ## 🧭 Roadmap
 
-- [ ] Authentification par API Key
+- [x] Authentification par API Key
+- [x] Middleware de sécurité avec logs, rate-limit, validation
+- [x] Tests unitaires pour `/ping`
 - [ ] Support complet IPv6
 - [ ] Export des résultats (JSON brut, CSV, XML)
-- [ ] Mode batch (ex. : ping ou nmap sur plusieurs hôtes)
+- [ ] Mode batch (ping / nmap multiple)
+- [ ] CI/CD GitHub Actions
 
 ---
 
 ## 📄 Licence
 
-**MIT** — Libre d’utilisation, modification et contribution
+**MIT** — Libre d’utilisation, modification et contribution.
 
 ---
 
