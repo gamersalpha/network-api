@@ -59,6 +59,12 @@ class SecurityMiddleware(BaseHTTPMiddleware):
         endpoint = request.url.path
         query_params = dict(request.query_params)
         api_key = request.headers.get("X-API-Key", "").strip()[:128]  # Strip & Limit
+        #logger.info(f"🔐 [DEBUG] Clé reçue depuis header : {api_key}")
+        #logger.info(f"🔐 [DEBUG] Clés autorisées : {list(API_KEYS.keys())}")
+        if api_key not in API_KEYS:
+            logger.warning(f"❌ Clé API invalide : '{api_key}'")
+
+
 
         if client_ip in BLACKLISTED_IPS:
             logger.warning(f"🔒 IP bloquée: {client_ip} - {endpoint}")
@@ -89,6 +95,7 @@ class SecurityMiddleware(BaseHTTPMiddleware):
 
             request_history[user_id].append((now, endpoint))
 
+        logger.info(f"🔍 [DEBUG] Query params reçus : {query_params}")
         # 🔍 Validation des paramètres
         for key, value in query_params.items():
             if DANGEROUS_PATTERN.search(value):
