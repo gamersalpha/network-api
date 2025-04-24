@@ -1,12 +1,13 @@
 from fastapi import FastAPI
 from app.api.v1.endpoints import ping, dig, whois, nslookup, traceroute, dns_full,nmap
+from app.core.security_middleware import SecurityMiddleware
 
 app = FastAPI(
     title="Network Tools API",
     description="API pour exécuter des outils réseau via HTTP",
     version="1.0.0"
 )
-
+app.add_middleware(SecurityMiddleware)
 # Inclusion des routes
 app.include_router(ping.router, prefix="/v1", tags=["Ping"])
 app.include_router(dig.router, prefix="/v1", tags=["DNS"])

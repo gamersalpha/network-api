@@ -1,0 +1,17 @@
+APP_NAME=Network Tools API
+DEBUG=True
+
+# Configuration de sécurité
+API_KEY_DEV=dev_key_123456
+API_KEY_ADMIN=admin_key_654321
+API_RATE_LIMIT_DEV=30
+API_RATE_LIMIT_ADMIN=100
+
+# Configuration des journaux
+LOG_DIR=logs
+LOG_LEVEL=INFO
+
+# Paramètres généraux
+DEBUG=False
+HOST=0.0.0.0
+PORT=8088

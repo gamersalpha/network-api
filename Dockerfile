@@ -7,6 +7,7 @@ RUN apt-get update && \
     apt-get install -y iputils-ping net-tools traceroute nmap dnsutils whois && \
     apt-get clean
 
+RUN mkdir -p /app/logs
 
 # Dépendances Python
 COPY requirements.txt .
